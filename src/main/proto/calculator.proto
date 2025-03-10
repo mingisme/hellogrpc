@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+option java_package = "com.example.grpc";
+option java_outer_classname = "CalculatorProto";
+
+package calculator;
+
+service CalculatorService {
+  // Unary RPC: Client sends two numbers, gets the sum.
+  rpc Add(AddRequest) returns (AddResponse) {}
+
+  // Server streaming RPC: Client sends a number, server streams back prime factors.
+  rpc PrimeDecomposition(PrimeRequest) returns (stream PrimeResponse) {}
+
+  // Client streaming RPC: Client streams numbers, server returns their average.
+  rpc ComputeAverage(stream AverageRequest) returns (AverageResponse) {}
+
+  // Bidirectional streaming RPC: Client streams numbers, server streams back the current maximum.
+  rpc FindMaximum(stream MaximumRequest) returns (stream MaximumResponse) {}
+}
+
+message AddRequest {
+  int32 a = 1;
+  int32 b = 2;
+}
+
+message AddResponse {
+  int32 result = 1;
+}
+
+message PrimeRequest {
+  int32 number = 1;
+}
+
+message PrimeResponse {
+  int32 factor = 1;
+}
+
+message AverageRequest {
+  int32 number = 1;
+}
+
+message AverageResponse {
+  double average = 1;
+}
+
+message MaximumRequest {
+  int32 number = 1;
+}
+
+message MaximumResponse {
+  int32 maximum = 1;
+}
